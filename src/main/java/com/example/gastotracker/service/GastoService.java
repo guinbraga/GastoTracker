@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class GastoService {
         return this.gastoRepository.findAll();
     }
 
-    public List<Gasto> listarGastoFiltro(String categoria){
+    public List<Gasto> listarGastoFiltro(String categoria, LocalDate dataInicial, LocalDate dataFinal){
         Specification<Gasto> spec = (root, query, criteriaBuilder) -> {
             // lista de condições
             List<Predicate> predicates = new ArrayList<>();
@@ -29,6 +31,15 @@ public class GastoService {
             // filtro de categoria
             if (categoria != null && !categoria.isEmpty()){
                 predicates.add(criteriaBuilder.equal(root.get("categoria"), categoria));
+            }
+
+            // filtro de data inicial - data final
+            if (dataInicial != null){
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("dataGasto"), dataInicial.atStartOfDay()));
+            }
+
+            if (dataFinal != null){
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("dataGasto"), dataFinal.atTime(LocalTime.MAX)));
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

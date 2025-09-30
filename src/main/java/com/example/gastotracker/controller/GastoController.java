@@ -1,9 +1,8 @@
 package com.example.gastotracker.controller;
 
-import com.example.gastotracker.enums.Categorias;
-import com.example.gastotracker.enums.FormaPagamento;
 import com.example.gastotracker.model.Gasto;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import com.example.gastotracker.service.GastoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/gastos")
@@ -21,9 +22,15 @@ public class GastoController {
     public GastoController(GastoService gastoService) {this.gastoService = gastoService;}
 
     @GetMapping
-    public String listar(Model model, @RequestParam(required = false) String categoria){
-        model.addAttribute("gasto", gastoService.listarGastoFiltro(categoria));
+    public String listar(Model model,
+                         @RequestParam(required = false) String categoria,
+                         @RequestParam(required = false) @DateTimeFormat LocalDate dataInicial,
+                         @RequestParam(required = false) @DateTimeFormat LocalDate dataFinal){
+        model.addAttribute("gasto", gastoService.listarGastoFiltro(categoria, dataInicial, dataFinal));
         model.addAttribute("categoriaFiltro", categoria);
+        model.addAttribute("dataInicialFiltro", dataInicial);
+        model.addAttribute("dataFinalFiltro", dataFinal);
+
         return "gastos/lista";
     }
 

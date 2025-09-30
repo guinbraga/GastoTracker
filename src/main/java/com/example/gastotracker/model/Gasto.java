@@ -1,13 +1,12 @@
 package com.example.gastotracker.model;
 
-import com.example.gastotracker.enums.Categorias;
-import com.example.gastotracker.enums.FormaPagamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,6 +19,7 @@ public class Gasto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     @Positive(message = "Insira um valor positivo!")
     private BigDecimal valor;
 
