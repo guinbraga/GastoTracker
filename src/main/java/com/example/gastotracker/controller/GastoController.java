@@ -21,8 +21,9 @@ public class GastoController {
     public GastoController(GastoService gastoService) {this.gastoService = gastoService;}
 
     @GetMapping
-    public String listar(Model model){
-        model.addAttribute("gasto", gastoService.listarGastos());
+    public String listar(Model model, @RequestParam(required = false) String categoria){
+        model.addAttribute("gasto", gastoService.listarGastoFiltro(categoria));
+        model.addAttribute("categoriaFiltro", categoria);
         return "gastos/lista";
     }
 
@@ -69,5 +70,6 @@ public class GastoController {
         ra.addFlashAttribute("msg", "Gasto removido com sucesso!");
         return "redirect:/gastos";
     }
+
 
 }

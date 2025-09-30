@@ -2,10 +2,13 @@ package com.example.gastotracker.service;
 
 import com.example.gastotracker.model.Gasto;
 import com.example.gastotracker.repository.GastoRepository;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +17,22 @@ public class GastoService {
     @Autowired
     private GastoRepository gastoRepository;
 
-    public List<Gasto> listarGastos(){
+    public List<Gasto> listarTodosGastos(){
         return this.gastoRepository.findAll();
+    }
+
+    public List<Gasto> listarGastoFiltro(String categoria){
+        Specification<Gasto> spec = (root, query, criteriaBuilder) -> {
+            // lista de condições
+            List<Predicate> predicates = new ArrayList<>();
+
+            // filtro de categoria
+            if (categoria != null && !categoria.isEmpty()){
+                predicates.add(criteriaBuilder.equal(root.get("categoria"), categoria));
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return gastoRepository.findAll(spec);
     }
 
     public Gasto buscarGastoPorId(Long id){
