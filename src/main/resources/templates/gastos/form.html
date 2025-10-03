@@ -38,15 +38,18 @@
                             <input th:field="*{valor}"
                                    class="form-control"
                                    id="valor"
-                                   type="text"
-                                   inputmode="decimal"
-                                   pattern="^\d*([.,]\d{1,2})?$" required/><br>
+                                   type="number"
+                                   min="0.01"
+                                   step="0.01" required/><br>
+                            <div class="error" th:errors="*{valor}"></div>
 
-                            <label for="descricao" class="form-label">Descrição</label>
+                            <label for="descricao" class="form-label">Descrição (opcional)</label>
                             <input th:field="*{descricao}" class="form-control" id="descricao" type="text"><br>
+                            <div class="error" th:errors="*{descricao}"></div>
 
                             <label for="dataGasto" class="form-label">Data</label>
-                            <input th:field="*{dataGasto}" class="form-control" id="dataGasto" type="datetime-local" required><br>
+                            <input th:value="${#temporals.format(gasto.dataGasto, 'yyyy-MM-dd HH:mm')}" class="form-control" id="dataGasto" type="datetime-local" name="dataGasto" required><br>
+                            <div class="error" th:errors="*{dataGasto}"></div>
 
                             <label for="categoria" class="form-label">Categoria</label>
                             <select th:field="*{categoria}" class="form-control" id="categoria"><br>
@@ -58,6 +61,7 @@
                                 <option value="🏡 Despesas da Casa">🏡 Despesas da Casa</option>
                                 <option value="✳️ Outros">✳️ Outros</option>
                             </select><br>
+                            <div class="error" th:errors="*{categoria}"></div>
 
                             <label for="formaPagamento" class="form-label">Forma de Pagamento</label>
                             <select th:field="*{formaPagamento}" class="form-control" id="formaPagamento"><br>
@@ -65,12 +69,6 @@
                                 <option value="Pix/Débito">Pix/Débito</option>
                                 <option value="Dinheiro">Dinheiro</option>
                             </select>
-
-                            <!-- Erros por campo -->
-                            <div class="error" th:errors="*{valor}"></div>
-                            <div class="error" th:errors="*{descricao}"></div>
-                            <div class="error" th:errors="*{dataGasto}"></div>
-                            <div class="error" th:errors="*{categoria}"></div>
                             <div class="error" th:errors="*{formaPagamento}"></div>
 
                             <button type="submit" class="btn btn-success mt-4">Salvar Gasto</button>
@@ -87,15 +85,19 @@
                             <input th:field="*{valor}"
                                    class="form-control"
                                    id="valor"
-                                   type="text"
-                                   inputmode="decimal"
-                                   pattern="^\d*([.,]\d{1,2})?$" required/><br>
+                                   type="number"
+                                   min="0.01"
+                                   step="0.01"
+                                   required/><br>
+                            <div class="error" th:errors="*{valor}"></div>
 
-                            <label for="descricao" class="form-label">Descrição</label>
+                            <label for="descricao" class="form-label">Descrição (opcional)</label>
                             <input th:field="*{descricao}" class="form-control" id="descricao" type="text"><br>
+                            <div class="error" th:errors="*{descricao}"></div>
 
                             <label for="dataGasto" class="form-label">Data</label>
                             <input th:value="${#temporals.format(gasto.dataGasto, 'yyyy-MM-dd HH:mm')}" class="form-control" id="dataGasto" type="datetime-local" name="dataGasto" required><br>
+                            <div class="error" th:errors="*{dataGasto}"></div>
 
                             <label for="categoria" class="form-label">Categoria</label>
                             <select th:field="*{categoria}" class="form-control" id="categoria"><br>
@@ -107,6 +109,7 @@
                                 <option value="🏡 Despesas da Casa">🏡 Despesas da Casa</option>
                                 <option value="✳️ Outros">✳️ Outros</option>
                             </select><br>
+                            <div class="error" th:errors="*{categoria}"></div>
 
                             <label for="formaPagamento" class="form-label">Forma de Pagamento</label>
                             <select th:field="*{formaPagamento}" class="form-control" id="formaPagamento"><br>
@@ -114,12 +117,6 @@
                                 <option value="Pix/Débito">Pix/Débito</option>
                                 <option value="Dinheiro">Dinheiro</option>
                             </select>
-
-                            <!-- Erros por campo -->
-                            <div class="error" th:errors="*{valor}"></div>
-                            <div class="error" th:errors="*{descricao}"></div>
-                            <div class="error" th:errors="*{dataGasto}"></div>
-                            <div class="error" th:errors="*{categoria}"></div>
                             <div class="error" th:errors="*{formaPagamento}"></div>
 
                             <button type="submit" class="btn btn-success mt-4">Salvar Gasto</button>
