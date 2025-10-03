@@ -28,104 +28,106 @@
     <div class="container">
         <div class="row">
             <div class="col-4 mx-auto">
-                <div class="box">
-                    <h1 th:text="${gasto.id} != null ? 'Editar Gasto' : 'Novo Gasto'" class="mt-4 mb-4"></h1>
-                    <form th:if="${gasto.id} == null"
-                          th:action="@{/gastos}" method="post" th:object="${gasto}">
+                <div class="card mt-4">
+                    <div class="card-body bg-body-secondary">
+                        <h1 th:text="${gasto.id} != null ? 'Editar Gasto' : 'Novo Gasto'" class="mt-4 mb-4"></h1>
+                        <form th:if="${gasto.id} == null"
+                              th:action="@{/gastos}" method="post" th:object="${gasto}">
 
-                        <label for="valor" class="form-label">Valor</label>
-                        <input th:field="*{valor}"
-                               class="form-control"
-                               id="valor"
-                               type="text"
-                               inputmode="decimal"
-                               pattern="^\d*([.,]\d{1,2})?$" required/><br>
+                            <label for="valor" class="form-label">Valor</label>
+                            <input th:field="*{valor}"
+                                   class="form-control"
+                                   id="valor"
+                                   type="text"
+                                   inputmode="decimal"
+                                   pattern="^\d*([.,]\d{1,2})?$" required/><br>
 
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <input th:field="*{descricao}" class="form-control" id="descricao" type="text"><br>
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <input th:field="*{descricao}" class="form-control" id="descricao" type="text"><br>
 
-                        <label for="dataGasto" class="form-label">Data</label>
-                        <input th:field="*{dataGasto}" class="form-control" id="dataGasto" type="datetime-local" required><br>
+                            <label for="dataGasto" class="form-label">Data</label>
+                            <input th:field="*{dataGasto}" class="form-control" id="dataGasto" type="datetime-local" required><br>
 
-                        <label for="categoria" class="form-label">Categoria</label>
-                        <select th:field="*{categoria}" class="form-control" id="categoria"><br>
-                            <option value="🚗 Transporte">🚗 Transporte</option>
-                            <option value="🧀 Alimentação">🧀 Alimentação</option>
-                            <option value="❤️ Saúde">❤️ Saúde</option>
-                            <option value="📘 Educação">📘 Educação</option>
-                            <option value="⛱️ Lazer">⛱️ Lazer</option>
-                            <option value="🏡 Despesas da Casa">🏡 Despesas da Casa</option>
-                            <option value="✳️ Outros">✳️ Outros</option>
-                        </select><br>
+                            <label for="categoria" class="form-label">Categoria</label>
+                            <select th:field="*{categoria}" class="form-control" id="categoria"><br>
+                                <option value="🚗 Transporte">🚗 Transporte</option>
+                                <option value="🧀 Alimentação">🧀 Alimentação</option>
+                                <option value="❤️ Saúde">❤️ Saúde</option>
+                                <option value="📘 Educação">📘 Educação</option>
+                                <option value="⛱️ Lazer">⛱️ Lazer</option>
+                                <option value="🏡 Despesas da Casa">🏡 Despesas da Casa</option>
+                                <option value="✳️ Outros">✳️ Outros</option>
+                            </select><br>
 
-                        <label for="formaPagamento" class="form-label">Forma de Pagamento</label>
-                        <select th:field="*{formaPagamento}" class="form-control" id="formaPagamento"><br>
-                            <option value="Cartão de Crédito">Cartão de Crédito</option>
-                            <option value="Pix/Débito">Pix/Débito</option>
-                            <option value="Dinheiro">Dinheiro</option>
-                        </select>
+                            <label for="formaPagamento" class="form-label">Forma de Pagamento</label>
+                            <select th:field="*{formaPagamento}" class="form-control" id="formaPagamento"><br>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Pix/Débito">Pix/Débito</option>
+                                <option value="Dinheiro">Dinheiro</option>
+                            </select>
 
-                        <!-- Erros por campo -->
-                        <div class="error" th:errors="*{valor}"></div>
-                        <div class="error" th:errors="*{descricao}"></div>
-                        <div class="error" th:errors="*{dataGasto}"></div>
-                        <div class="error" th:errors="*{categoria}"></div>
-                        <div class="error" th:errors="*{formaPagamento}"></div>
+                            <!-- Erros por campo -->
+                            <div class="error" th:errors="*{valor}"></div>
+                            <div class="error" th:errors="*{descricao}"></div>
+                            <div class="error" th:errors="*{dataGasto}"></div>
+                            <div class="error" th:errors="*{categoria}"></div>
+                            <div class="error" th:errors="*{formaPagamento}"></div>
 
-                        <button type="submit" class="btn btn-success mt-4">Salvar Gasto</button>
-                        <a th:href="@{/gastos}"
-                        <button class="mt-4 btn btn-danger">Cancelar</button>
-                        </a>
-                    </form>
+                            <button type="submit" class="btn btn-success mt-4">Salvar Gasto</button>
+                            <a th:href="@{/gastos}"
+                            <button class="mt-4 btn btn-danger">Cancelar</button>
+                            </a>
+                        </form>
 
-                    <form th:if="${gasto.id} != null"
-                          th:action="@{/gastos/{id}(id=${gasto.id})}" method="post" th:object="${gasto}">
-                        <input type="hidden" name="_method" value="put"/>
+                        <form th:if="${gasto.id} != null"
+                              th:action="@{/gastos/{id}(id=${gasto.id})}" method="post" th:object="${gasto}">
+                            <input type="hidden" name="_method" value="put"/>
 
-                        <label for="valor" class="form-label">Valor</label>
-                        <input th:field="*{valor}"
-                               class="form-control"
-                               id="valor"
-                               type="text"
-                               inputmode="decimal"
-                               pattern="^\d*([.,]\d{1,2})?$" required/><br>
+                            <label for="valor" class="form-label">Valor</label>
+                            <input th:field="*{valor}"
+                                   class="form-control"
+                                   id="valor"
+                                   type="text"
+                                   inputmode="decimal"
+                                   pattern="^\d*([.,]\d{1,2})?$" required/><br>
 
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <input th:field="*{descricao}" class="form-control" id="descricao" type="text"><br>
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <input th:field="*{descricao}" class="form-control" id="descricao" type="text"><br>
 
-                        <label for="dataGasto" class="form-label">Data</label>
-                        <input th:value="${#temporals.format(gasto.dataGasto, 'yyyy-MM-dd HH:mm')}" class="form-control" id="dataGasto" type="datetime-local" name="dataGasto" required><br>
+                            <label for="dataGasto" class="form-label">Data</label>
+                            <input th:value="${#temporals.format(gasto.dataGasto, 'yyyy-MM-dd HH:mm')}" class="form-control" id="dataGasto" type="datetime-local" name="dataGasto" required><br>
 
-                        <label for="categoria" class="form-label">Categoria</label>
-                        <select th:field="*{categoria}" class="form-control" id="categoria"><br>
-                            <option value="🚗 Transporte">🚗 Transporte</option>
-                            <option value="🧀 Alimentação">🧀 Alimentação</option>
-                            <option value="❤️ Saúde">❤️ Saúde</option>
-                            <option value="📘 Educação">📘 Educação</option>
-                            <option value="⛱️ Lazer">⛱️ Lazer</option>
-                            <option value="🏡 Despesas da Casa">🏡 Despesas da Casa</option>
-                            <option value="✳️ Outros">✳️ Outros</option>
-                        </select><br>
+                            <label for="categoria" class="form-label">Categoria</label>
+                            <select th:field="*{categoria}" class="form-control" id="categoria"><br>
+                                <option value="🚗 Transporte">🚗 Transporte</option>
+                                <option value="🧀 Alimentação">🧀 Alimentação</option>
+                                <option value="❤️ Saúde">❤️ Saúde</option>
+                                <option value="📘 Educação">📘 Educação</option>
+                                <option value="⛱️ Lazer">⛱️ Lazer</option>
+                                <option value="🏡 Despesas da Casa">🏡 Despesas da Casa</option>
+                                <option value="✳️ Outros">✳️ Outros</option>
+                            </select><br>
 
-                        <label for="formaPagamento" class="form-label">Forma de Pagamento</label>
-                        <select th:field="*{formaPagamento}" class="form-control" id="formaPagamento"><br>
-                            <option value="Cartão de Crédito">Cartão de Crédito</option>
-                            <option value="Pix/Débito">Pix/Débito</option>
-                            <option value="Dinheiro">Dinheiro</option>
-                        </select>
+                            <label for="formaPagamento" class="form-label">Forma de Pagamento</label>
+                            <select th:field="*{formaPagamento}" class="form-control" id="formaPagamento"><br>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Pix/Débito">Pix/Débito</option>
+                                <option value="Dinheiro">Dinheiro</option>
+                            </select>
 
-                        <!-- Erros por campo -->
-                        <div class="error" th:errors="*{valor}"></div>
-                        <div class="error" th:errors="*{descricao}"></div>
-                        <div class="error" th:errors="*{dataGasto}"></div>
-                        <div class="error" th:errors="*{categoria}"></div>
-                        <div class="error" th:errors="*{formaPagamento}"></div>
+                            <!-- Erros por campo -->
+                            <div class="error" th:errors="*{valor}"></div>
+                            <div class="error" th:errors="*{descricao}"></div>
+                            <div class="error" th:errors="*{dataGasto}"></div>
+                            <div class="error" th:errors="*{categoria}"></div>
+                            <div class="error" th:errors="*{formaPagamento}"></div>
 
-                        <button type="submit" class="btn btn-success mt-4">Salvar Gasto</button>
-                        <a th:href="@{/gastos}"
-                        <button class="mt-4 btn btn-danger">Cancelar</button>
-                        </a>
-                    </form>
+                            <button type="submit" class="btn btn-success mt-4">Salvar Gasto</button>
+                            <a th:href="@{/gastos}"
+                            <button class="mt-4 btn btn-danger">Cancelar</button>
+                            </a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
