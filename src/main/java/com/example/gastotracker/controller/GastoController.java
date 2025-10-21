@@ -41,8 +41,21 @@ public class GastoController {
     }
 
     @GetMapping("/limpar")
-    public String limparSessao(HttpSession session){
-        session.invalidate();
+    public String limparSessao(HttpSession session,
+                               @RequestParam(required = false) String filtro){
+
+        switch (filtro){
+            case "categoria":
+                session.removeAttribute("filtroCategoria");
+                break;
+            case "dataInicial":
+                session.removeAttribute("filtroDataInicial");
+                break;
+            case "dataFinal":
+                session.removeAttribute("filtroDataFinal");
+                break;
+        }
+
         return "redirect:/gastos";
     }
 
