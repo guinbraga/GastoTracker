@@ -19,6 +19,7 @@ public class Gasto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "insira um valor!")
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     @Positive(message = "Insira um valor positivo!")
     private BigDecimal valor;
