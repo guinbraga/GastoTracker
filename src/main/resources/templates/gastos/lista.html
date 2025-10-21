@@ -72,8 +72,22 @@
                     </div>
                 </form>
 
-                <p th:if="${session.filtro != null}">
-                    Filtro ativo: <strong th:text="${session.filtro}"></strong>
+                <p th:if="${session.filtroCategoria != null}">
+                    Filtro de Categoria ativo: <strong th:text="${session.filtroCategoria}"></strong>
+                    <a th:href="@{gastos/limpar}" class = "btn btn-sm btn-outline-secondary">
+                        Limpar
+                    </a>
+                </p>
+
+                <p th:if="${session.filtroDataInicial != null}">
+                    Data Inicial: <strong th:text="${session.filtroDataInicial}"></strong>
+                    <a th:href="@{gastos/limpar}" class = "btn btn-sm btn-outline-secondary">
+                        Limpar
+                    </a>
+                </p>
+
+                <p th:if="${session.filtroDataFinal != null}">
+                    Data Final: <strong th:text="${session.filtroDataFinal}"></strong>
                     <a th:href="@{gastos/limpar}" class = "btn btn-sm btn-outline-secondary">
                         Limpar
                     </a>

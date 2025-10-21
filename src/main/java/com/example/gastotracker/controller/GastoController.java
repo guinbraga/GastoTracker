@@ -24,23 +24,18 @@ public class GastoController {
     public GastoController(GastoService gastoService) {this.gastoService = gastoService;}
 
     @GetMapping
-    public String listar(Model model,
-                         HttpSession session,
-                         @RequestParam(required = false) String categoria,
-                         @RequestParam(required = false) @DateTimeFormat LocalDate dataInicial,
-                         @RequestParam(required = false) @DateTimeFormat LocalDate dataFinal){
-        String categoriaFiltro = (String) session.getAttribute("filtro");
-        List<Gasto> gastos;
-        if (categoriaFiltro != null && !categoriaFiltro.isEmpty()){
-            gastos = gastoService.listarGastoFiltro(categoriaFiltro ,dataInicial, dataFinal);
-        } else {
-            gastos = gastoService.listarGastoFiltro(categoria, dataInicial, dataFinal);
-        }
+    public String listar(Model model, HttpSession session){
+        String categoriaFiltro = (String) session.getAttribute("filtroCategoria");
+        LocalDate dataInicialFiltro = (LocalDate) session.getAttribute("filtroDataInicial");
+        LocalDate dataFinalFiltro = (LocalDate) session.getAttribute("filtroDataFinal");
+
+        List<Gasto> gastos = gastoService.listarGastoFiltro(categoriaFiltro ,dataInicialFiltro, dataFinalFiltro);
 
         model.addAttribute("gasto", gastos);
-        model.addAttribute("categoriaFiltro", categoria);
-        model.addAttribute("dataInicialFiltro", dataInicial);
-        model.addAttribute("dataFinalFiltro", dataFinal);
+
+        model.addAttribute("categoriaFiltro", categoriaFiltro);
+        model.addAttribute("dataInicialFiltro", dataInicialFiltro);
+        model.addAttribute("dataFinalFiltro", dataFinalFiltro);
 
         return "gastos/lista";
     }
@@ -52,8 +47,14 @@ public class GastoController {
     }
 
     @PostMapping("/filtro")
-    public String aplicarFiltro(@RequestParam String categoria, HttpSession session) {
-        session.setAttribute("filtro", categoria);
+    public String aplicarFiltro(@RequestParam(required = false) String categoria,
+                                @RequestParam(required = false) @DateTimeFormat LocalDate dataInicial,
+                                @RequestParam(required = false) @DateTimeFormat LocalDate dataFinal,
+                                HttpSession session) {
+        session.setAttribute("filtroCategoria", categoria);
+        session.setAttribute("filtroDataInicial", dataInicial);
+        session.setAttribute("filtroDataFinal", dataFinal);
+
         return "redirect:/gastos";
     }
 
