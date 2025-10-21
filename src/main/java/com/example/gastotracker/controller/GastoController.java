@@ -32,7 +32,7 @@ public class GastoController {
         String categoriaFiltro = (String) session.getAttribute("filtro");
         List<Gasto> gastos;
         if (categoriaFiltro != null && !categoriaFiltro.isEmpty()){
-            gastos = gastoService.listarGastoFiltro(categoria,dataInicial,dataFinal);
+            gastos = gastoService.listarGastoFiltro(categoriaFiltro ,dataInicial, dataFinal);
         } else {
             gastos = gastoService.listarGastoFiltro(categoria, dataInicial, dataFinal);
         }
@@ -45,7 +45,7 @@ public class GastoController {
         return "gastos/lista";
     }
 
-    @GetMapping("/gastos/limpar")
+    @GetMapping("/limpar")
     public String limparSessao(HttpSession session){
         session.invalidate();
         return "redirect:/gastos";

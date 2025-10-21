@@ -39,7 +39,7 @@
                 <p th:if="${msg}" th:text="${msg}"></p>
 
                 <!-- filtro de categoria -->
-                <form th:action="@{/gastos}" method="get" class="mb-4 p-3 border rounded">
+                <form th:action="@{/gastos/filtro}" method="post" class="mb-4 p-3 border rounded">
                     <div class="row g-3 align-items-end">
                         <div class="col-md-4">
                             <label for="categoria" class="form-label">Filtrar por Categoria:</label>
@@ -72,59 +72,68 @@
                     </div>
                 </form>
 
+                <p th:if="${session.filtro != null}">
+                    Filtro ativo: <strong th:text="${session.filtro}"></strong>
+                    <a th:href="@{gastos/limpar}" class = "btn btn-sm btn-outline-secondary">
+                        Limpar
+                    </a>
+                </p>
+
                 <!-- Tabela -->
-                <table class="table table-hover table-bordered table-striped">
-                    <thead class="table-light">
-                        <th>Valor</th>
-                        <th>Data e Hora</th>
-                        <th>Categoria</th>
-                        <th>Forma de Pagamento</th>
-                        <th>Descrição</th>
-                        <th>Ações</th>
-                    </thead>
-                    <tr th:each="g : ${gasto}">
-                        <td th:text="${#numbers.formatCurrency(g.valor)}"></td>
-                        <td th:text="${#temporals.format(g.dataGasto, 'dd/MM/yyyy HH:mm')}"></td>
-                        <td th:text="${g.categoria}"></td>
-                        <td th:text="${g.formaPagamento}"></td>
-                        <td th:text="${g.descricao}"></td>
-                        <td class="text-center align-middle">
-                            <a th:href="@{/gastos/editar/{id}(id=${g.id})}"
-                               class="btn btn-sm btn-outline-primary me-1"
-                               title="Editar Gasto">
-                                <img th:src="@{/icons/edit.png}" alt="Editar" width="20">
-                            </a>
+                <div th:if="${!#lists.isEmpty(gasto)}" class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead class="table-light">
+                            <th>Valor</th>
+                            <th>Data e Hora</th>
+                            <th>Categoria</th>
+                            <th>Forma de Pagamento</th>
+                            <th>Descrição</th>
+                            <th>Ações</th>
+                        </thead>
+                        <tr th:each="g : ${gasto}">
+                            <td th:text="${#numbers.formatCurrency(g.valor)}"></td>
+                            <td th:text="${#temporals.format(g.dataGasto, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${g.categoria}"></td>
+                            <td th:text="${g.formaPagamento}"></td>
+                            <td th:text="${g.descricao}"></td>
+                            <td class="text-center align-middle">
+                                <a th:href="@{/gastos/editar/{id}(id=${g.id})}"
+                                   class="btn btn-sm btn-outline-primary me-1"
+                                   title="Editar Gasto">
+                                    <img th:src="@{/icons/edit.png}" alt="Editar" width="20">
+                                </a>
 
-                            <button type="button" class="btn btn-sm btn-outline-danger"
-                                    title="Excluir Gasto"
-                                    data-bs-toggle="modal"
-                                    th:data-bs-target="|#confirmarExclusao-${g.id}|">
-                                <img th:src="@{/icons/delete.png}" alt="Excluir" width="20">
-                            </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        title="Excluir Gasto"
+                                        data-bs-toggle="modal"
+                                        th:data-bs-target="|#confirmarExclusao-${g.id}|">
+                                    <img th:src="@{/icons/delete.png}" alt="Excluir" width="20">
+                                </button>
 
-                            <div class="modal fade" th:id="|confirmarExclusao-${g.id}|" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Excluir Gasto</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                        </div>
-                                        <div class="modal-body text-start">
-                                            Tem certeza de que deseja excluir este gasto?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <form th:action="@{/gastos/{id}(id=${g.id})}" method="post" class="d-inline">
-                                                <input type="hidden" name="_method" value="delete"/>
-                                                <button type="submit" class="btn btn-danger">Excluir</button>
-                                            </form>
+                                <div class="modal fade" th:id="|confirmarExclusao-${g.id}|" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Excluir Gasto</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                            </div>
+                                            <div class="modal-body text-start">
+                                                Tem certeza de que deseja excluir este gasto?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <form th:action="@{/gastos/{id}(id=${g.id})}" method="post" class="d-inline">
+                                                    <input type="hidden" name="_method" value="delete"/>
+                                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
             </div>
         </div>
