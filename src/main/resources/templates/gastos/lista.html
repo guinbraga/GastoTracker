@@ -24,6 +24,21 @@
                 </li>
             </ul>
         </div>
+        <div class="d-flex ms-auto align-items-center">
+            <!-- Exibe apenas se o usuário estiver logado -->
+            <div th:if="${session.usuarioLogado != null}" class="me-3 text-muted">
+                <span>
+                  Olá, <strong th:text="${session.usuarioLogado.nome}"></strong>
+                </span>
+            </div>
+
+            <!-- Botão de Logout -->
+            <form th:action="@{/logout}" method="get" class="m-0">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-box-arrow-right"></i> Sair
+                </button>
+            </form>
+        </div>
     </div>
 </nav>
     <div class="container-fluid">
